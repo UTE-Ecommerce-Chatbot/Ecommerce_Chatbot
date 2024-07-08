@@ -1,0 +1,58 @@
+version: "3.1"
+
+rules:
+  - rule: Chào hỏi
+    steps:
+      - intent: greet
+      - action: utter_greet
+
+  - rule: Say goodbye anytime the user says goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - rule: Say 'I am a bot' anytime the user challenges
+    steps:
+      - intent: bot_challenge
+      - action: utter_iamabot
+
+  - rule: Cảm ơn
+    steps:
+      - intent: thanks
+      - action: utter_thanks
+
+  - rule: Xem thông tin sản phẩm
+    steps:
+      - intent: ask_product_info
+      - action: utter_product_info
+      - action: action_provide_product_info
+
+  - rule: Activate the recommend_form
+    steps:
+      - intent: ask_recommendation
+      - action: recommend_form
+      - active_loop: recommend_form
+
+  - rule: Submit the recommend_form
+    condition:
+      - active_loop: recommend_form
+    steps:
+      - action: recommend_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: action_provide_recommendation
+      - action: action_clear_all_slots
+      - action: utter_iamabot
+
+  # - rule: Answer when the user asks for the general promotion
+  #   steps:
+  #     - intent: ask_promotion
+  #     - action: utter_general_promotion
+
+  # - rule: Answer when the user asks for the promotion of specific product
+  #   steps:
+  #     - intent: ask_promotion
+  #     - entities:
+  #         - product
+  #     - action: action_product_specific_promotion

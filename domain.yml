@@ -1,0 +1,157 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - thanks
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - ask_product_info
+  # # - search_product
+  # - ask_product_price
+  # - ask_product_availability
+  # - ask_delivery_info
+  # - ask_payment_methods
+  # - ask_order_status
+  # - ask_time_delivery
+  - ask_recommendation
+  # - ask_promotion
+
+entities:
+  - product_type
+  - keyword_search
+  - brand
+  - budget
+
+slots:
+  product_type:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: product_type
+        condition:
+        - active_loop: recommend_form
+
+  brand:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: brand
+        condition:
+        - active_loop: recommend_form
+        
+  budget:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: budget
+        condition:
+        - active_loop: recommend_form
+
+responses:
+  utter_greet:
+    - text: "Hey! How are you?"
+    - text: "Chào bạn, có điều gì tôi có thể giúp bạn hôm nay?"
+    - text: "Xin chào, chào mừng bạn đến với cửa hàng của chúng tôi!"
+    - text: "Hi, bạn cần sự trợ giúp gì từ chúng tôi?"
+    - text: "Xin chào, hãy nói cho tôi biết bạn đang tìm kiếm sản phẩm gì."
+    - text: "Chào bạn, tôi rất vui được gặp bạn tại đây!"
+
+  utter_cheer_up:
+    - text: "Here is something to cheer you up:"
+      image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_did_that_help:
+    - text: "Did that help you?"
+
+  utter_happy:
+    - text: "Great, carry on!"
+
+  utter_goodbye:
+    - text: "Bye"
+    - text: "Cảm ơn bạn đã sử dụng cửa hàng của chúng tôi, hẹn gặp lại!"
+    - text: "Hẹn gặp lại bạn sau!"
+    - text: "Bye, hãy quay lại nếu cần thêm sự trợ giúp!"
+    - text: "Tạm biệt, hẹn gặp lại bạn sau!"
+    - text: "Hẹn gặp lại bạn, chúc bạn có một ngày tốt lành!"
+    - text: "Bye, hy vọng sớm gặp lại bạn"
+    - text: "Tạm biệt, đừng quên quay lại nếu có thêm câu hỏi nhé!"
+    - text: "Hẹn gặp lại bạn vào lần sau!"
+
+  utter_iamabot:
+    - text: "I am a bot, powered by Rasa."
+
+  utter_thanks:
+    - text: "Cảm ơn bạn đã liên hệ! Rất vui được hỗ trợ bạn."
+
+  utter_search_results:
+    - text: "Dưới đây là kết quả tìm kiếm sản phẩm của bạn:"
+
+  utter_product_info:
+    - text: "Thông tin chi tiết về sản phẩm bạn quan tâm:"
+
+  utter_product_availability:
+    - text: "Sản phẩm hiện đang còn hàng."
+    - text: "Rất tiếc, sản phẩm hiện đã hết hàng."
+
+  utter_delivery_info:
+    - text: "Thông tin giao hàng của bạn như sau:"
+
+  utter_payment_methods:
+    - text: "Chúng tôi hỗ trợ các phương thức thanh toán sau:"
+
+  utter_order_status:
+    - text: "Trạng thái đơn hàng của bạn là:"
+
+  utter_time_delivery:
+    - text: "Thời gian giao hàng dự kiến là:"
+
+  utter_recommendation:
+    - text: "Dựa trên sở thích của bạn, tôi gợi ý bạn những sản phẩm sau:"
+
+  # recommendation form required slots
+  utter_ask_product_type:
+    - text: "Bạn đang tìm kiếm sản phẩm nào ạ? (Ví dụ: điện thoại, laptop, máy ảnh,...)"
+  utter_ask_brand:
+    - text: "Bạn có ưu tiên thương hiệu nào không ạ? (Ví dụ: Samsung, Apple, Sony,...)"
+  utter_ask_budget:
+    - text: "Bạn đang tìm kiếm sản phẩm nào trong tầm giá bao nhiêu ạ?"
+      buttons:
+        - title: "Thấp (< 5 triệu)"
+          payload: '/ask_recommendation{{"budget":"low"}}'
+        - title: "Trung (5-10 triệu)"
+          payload: '/ask_recommendation{{"budget":"medium"}}'
+        - title: "Cao ( > 10 triệu )"
+          payload: '/ask_recommendation{{"budget":"high"}}'
+
+actions:
+  - action_provide_product_info
+  - action_search_product
+  - action_provide_product_price
+  - action_check_product_availability
+  - action_delivery_info
+  - action_payment_methods
+  - action_check_order_status
+  - action_provide_delivery_time
+  - action_provide_recommendation
+  - action_clear_all_slots
+  - validate_recommend_form
+
+forms:
+  recommend_form:
+    ignored_intents: 
+    - chitchat
+    required_slots:
+      - product_type
+      - brand
+      - budget
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

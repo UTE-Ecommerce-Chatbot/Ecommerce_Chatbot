@@ -1,0 +1,52 @@
+[
+  {
+    "tag_name": "entity",
+    "ids_to_tags": {
+      "1": "B-brand",
+      "2": "I-brand",
+      "3": "L-brand",
+      "4": "U-brand",
+      "5": "B-budget",
+      "6": "I-budget",
+      "7": "L-budget",
+      "8": "U-budget",
+      "9": "B-keywords",
+      "10": "I-keywords",
+      "11": "L-keywords",
+      "12": "U-keywords",
+      "13": "B-product",
+      "14": "I-product",
+      "15": "L-product",
+      "16": "U-product",
+      "17": "B-product_type",
+      "18": "I-product_type",
+      "19": "L-product_type",
+      "20": "U-product_type",
+      "0": "O"
+    },
+    "tags_to_ids": {
+      "B-brand": 1,
+      "I-brand": 2,
+      "L-brand": 3,
+      "U-brand": 4,
+      "B-budget": 5,
+      "I-budget": 6,
+      "L-budget": 7,
+      "U-budget": 8,
+      "B-keywords": 9,
+      "I-keywords": 10,
+      "L-keywords": 11,
+      "U-keywords": 12,
+      "B-product": 13,
+      "I-product": 14,
+      "L-product": 15,
+      "U-product": 16,
+      "B-product_type": 17,
+      "I-product_type": 18,
+      "L-product_type": 19,
+      "U-product_type": 20,
+      "O": 0
+    },
+    "num_tags": 21
+  }
+]

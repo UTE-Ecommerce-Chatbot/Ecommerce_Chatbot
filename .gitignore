@@ -1,0 +1,10 @@
+node_modules/
+*.model.js
+
+
+models/
+*.tar.gz
+
+venv/
+
+rasa-env/

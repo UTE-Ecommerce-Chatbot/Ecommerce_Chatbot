@@ -1,0 +1,5 @@
+python==3.8.10
+rasa==3.6.20
+spacy==3.0.9
+pyvi
+pydantic==1.7.4

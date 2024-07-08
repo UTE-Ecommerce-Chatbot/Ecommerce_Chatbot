@@ -1,0 +1,292 @@
+version: "3.1"
+
+nlu:
+  - synonym: điện thoại 
+    examples: |
+      - điện thoại thông minh
+      - điện thoại di động thông minh
+      - điện thoại cầm tay  
+      - máy điện thoại
+      - máy nghe gọi
+      - thiết bị cầm tay
+      - smartphone đời mới
+      - điện thoại cảm ứng
+      - điện thoại màn hình cảm ứng
+      - smartphone
+      - phone
+
+  - synonym: laptop
+    examples: |-
+      - máy tính xách tay
+      - máy tính cá nhân
+      - notebook
+      - ultrabook
+      - laptop gaming
+      - laptop văn phòng
+      - máy tính xách tay mỏng nhẹ
+      - máy tính xách tay doanh nhân
+      - laptop 2 trong 1
+      - máy tính xách tay lai
+      - máy tính xách tay màn hình cảm ứng
+      - máy tính xách tay hiệu năng cao
+      - máy tính xách tay giá rẻ
+      - laptop cũ
+      - laptop mới
+  
+  - synonym: tablet
+    examples: |
+      - máy tính bảng
+      - ipad (thương hiệu của Apple)
+      - máy tính bảng Android
+      - máy tính bảng iOS
+      - máy tính bảng Windows
+      - máy tính bảng màn hình lớn
+      - máy tính bảng nhỏ gọn
+      - máy tính bảng giá rẻ
+      - máy tính bảng cao cấp
+      - máy tính bảng chơi game
+      - máy tính bảng vẽ
+      - máy tính bảng đọc sách
+      
+  - intent: greet
+    examples: |
+      - Xin chào
+      - Chào bạn
+      - Chào buổi sáng/chiều/tối
+      - Hello
+      - Hi
+      - Alo
+      - Chào anh/chị
+      - Chào em
+      - Chào ad
+      - Chào shop
+
+  - intent: goodbye
+    examples: |
+      - Tạm biệt
+      - Hẹn gặp lại
+      - Bye
+      - goodbye
+
+  - intent: thanks
+    examples: |
+      - Thanks
+      - Thank you
+      - Cảm ơn
+      - Tks
+      - Cảm ơn bạn rất nhiều!
+      - Tks, đã rất hữu ích!
+      - Thank you, tôi đánh giá cao sự hỗ trợ của bạn!
+      - Xin cảm ơn vì đã giúp đỡ!
+      - Rất cảm ơn bạn đã dành thời gian để giúp tôi!
+
+  - intent: affirm # Đồng ý
+    examples: |
+      - vâng
+      - dạ
+      - được
+      - ok
+      - đúng rồi
+      - chính xác
+      - tất nhiên
+      - đương nhiên
+      - chuẩn luôn
+      - nghe hay đấy
+      - được đó
+
+  - intent: deny # Từ chối
+    examples: |
+      - không
+      - thôi
+      - không được
+      - ko
+      - không thích
+      - không muốn
+      - không đâu
+      - chắc chắn là không
+      - thôi khỏi
+      - không cần đâu
+      - no
+      - không cần
+
+  - intent: mood_great # Tâm trạng tốt
+    examples: |
+      - tuyệt vời
+      - rất tốt
+      - tốt lắm
+      - quá đã
+      - sướng quá
+      - vui quá
+      - hạnh phúc quá
+      - đang cảm thấy rất tốt
+      - mình thấy ổn
+      - rất tuyệt
+      - quá đỉnh
+      - đỉnh của chóp
+      - số dzách
+      - cười như được mùa
+
+  - intent: mood_unhappy # Tâm trạng không vui
+    examples: |
+      - buồn quá
+      - chán quá
+      - mệt mỏi quá
+      - thất vọng quá
+      - buồn lắm
+      - nản quá
+      - chán nản
+      - không vui
+      - không ổn chút nào
+      - tệ quá
+      - xui xẻo
+      - đen như cột nhà cháy
+
+  - intent: bot_challenge # Thách thức chatbot
+    examples: |
+      - bạn là bot à?
+      - bạn là người hay bot vậy?
+      - mình đang nói chuyện với bot hả?
+      - đây có phải là bot không?
+      - bạn có phải người máy không?
+      - tôi đang chat với ai đây?
+
+  - intent: ask_product_info
+    examples: |
+      - Cho tôi xin thông tin về sản phẩm [iPhone 13](keywords)
+      - Xin thông tin về sản phẩm [Iphone 14](product)
+      - Bạn có bán [tivi](product) không?
+      - Cho tôi biết về [Laptop Acer](product)
+      - Tôi muốn biết về [iPhone 12](product)
+      - Hiển thị thông tin chi tiết của [iPad Pro](product)
+      - Bạn có thể cung cấp thông tin về [Samsung Galaxy S21](product) không?
+      - Các thông số kỹ thuật của [Laptop HP Pavilion 15] là gì?
+      - Chi tiết về [MacBook Air](product)
+      - Cung cấp thông tin về [Sony WH-1000XM4]
+      - Tôi cần thông tin chi tiết về [Dell XPS 13]
+      - Xem thông tin [Samsung Galaxy S20](product)
+      - Cho tôi biết chi tiết về [điện thoại iPhone 15](product)
+      - [iPad Pro M2](product) có những tính năng gì?
+      - Tôi quan tâm đến điện thoại [Samsung Galaxy S23 Ultra](product)
+
+  # - intent: search_product
+  #   examples: |
+  #     - Tôi muốn tìm sản phẩm [điện thoại Samsung Galaxy S21] ((product)
+  #     - Tôi cần tìm sản phẩm [Apple](brand)
+  #     - Tôi muốn tìm sản phẩm [Xiaomi](brand)
+  #     - Tôi cần tìm sản phẩm [iphone](brand)
+  #     - Tôi đang tìm [laptop](product)
+  #     - Bạn có [điện thoại](product) không?
+  #     - Tôi cần một cái [tai nghe](product)
+  #     - Hiển thị cho tôi một số [máy tính bảng](product)
+  #     - Tìm cho tôi [máy tính xách tay](product) giá rẻ
+  #     - Cho xem các [điện thoại] (product) của [Samsung](brand)
+  #     - [Laptop gaming](product)
+  #     - Có [máy tính bảng](product) nào của [Samsung](brand) không?
+
+
+  # - intent: ask_product_price
+  #   examples: |
+  #     - Giá của [điện thoại Samsung Galaxy S21](product) là bao nhiêu?
+  #     - Tôi muốn biết giá của [đồng hồ Casio](product)
+  #     - Xin giá của [túi xách Louis Vuitton](product)
+  #     - Cho biết giá của [quần jean Levi's](product)
+
+  # - intent: ask_product_availability
+  #   examples: |
+  #     - Sản phẩm [laptop Dell XPS 15](product) còn bạn
+  #     - [Tai nghe Bluetooth Sony](product) còn không
+  #     - Tôi muốn biết được [máy lọc không khí Xiaomi](product) còn tồn
+  #     - Có còn không [balo The North Face](product) không
+
+  # - intent: ask_delivery_info
+  #   examples: |
+  #     - Khoảng cách giao hãng cho đơn hàng không bao xa?
+  #     - Làm sao để kiểm tra trạng thái giao hãng?
+  #     - Tôi muốn biết về chính số giao hãng của đơn hàng.
+
+  # - intent: ask_payment_methods
+  #   examples: |
+  #     - Phương thức thanh toán nào có sẵn?
+  #     - Tôi có thể thanh toán bằng thẻ tín dụng không?
+  #     - Các chấp nhận thanh toán khi nhận đơn hàng không?
+  #     - Làm sao để thanh toán qua cắc thanh toán trực tuyến?
+
+  # - intent: ask_order_status
+  #   examples: |
+  #     - Tôi muốn kiểm tra trang thái đơn hàng?
+  #     - Tôi muốn xem trang thái đơn hàng cuối cùng?
+  #     - Tôi muốn xem trang thái đơn hàng cuối cấp?
+  #     - Tôi muốn kiểm tra trang thái đơn hàng trên trang web?
+
+  # - intent: ask_time_delivery
+  #   examples: |
+  #     - Thời gian giao hãng của đơn hàng là bao lâu?
+  #     - Mất bao lâu để giao hàng?
+  #     - Thời gian giao hàng dự kiến là khi nào?
+  #     - Bao lâu thì hàng đến ?
+  #     - Tôi ở [Hà Nội]([location]), phí vận chuyển là bao nhiêu?
+  #     - Các bạn có giao hàng vào cuối tuần không?
+  #     - Tôi có thể theo dõi đơn hàng của mình ở đâu?
+
+  - intent: ask_recommendation
+    examples: |
+      - Bạn có thể gợi ý cho tôi một số sản phẩm phổ biến không?
+      - Tôi muốn mua một món quà cho người yêu, bạn có thể giúp tôi chọn không?
+      - Xin hãy đề xuất cho tôi một số sản phẩm mới nhất trong cửa hàng của bạn.
+      - Tôi đang tìm kiếm một sản phẩm có giá phải chăng, bạn có thể gợi ý cho tôi không?
+      - intent: choice_suggest_product
+      - tôi muốn gợi ý một sản phẩm
+      - tôi muốn đề xuất một sản phẩm
+      - tôi muốn gợi ý gì đó
+      - gợi ý sản phẩm
+      - đề xuất sản phẩm
+      - gợi ý cái gì đó
+      - đề xuất cái gì đó
+      - gợi ý thứ gì đó
+      - đề xuất thứ gì đó
+      - gợi ý một cái gì đó
+      - đề xuất một cái gì đó
+      - tôi có thể gợi ý một sản phẩm không
+      - tôi có thể đề xuất một sản phẩm không
+      - tôi có thể gợi ý cái gì đó không
+      - tôi có thể đề xuất cái gì đó không
+      - tôi muốn làm một gợi ý sản phẩm
+      - tôi muốn làm một đề xuất sản phẩm
+      - tôi muốn đưa ra một gợi ý
+      - tôi muốn đưa ra một đề xuất
+      - có thể gợi ý sản phẩm không
+      - có thể đề xuất sản phẩm không
+      - có thể gợi ý cái gì đó không
+      - có thể đề xuất cái gì đó không
+      - có thể gợi ý một sản phẩm không
+      - có thể đề xuất một sản phẩm không
+      - có thể gợi ý điều gì không
+      - có thể đề xuất điều gì không
+      - Tôi muốn tìm sản phẩm [điện thoại] ((product_type)
+      - Tôi cần tìm sản phẩm [Apple](brand)
+      - Tôi muốn tìm sản phẩm [Xiaomi](brand)
+      - Tôi cần tìm sản phẩm [iphone](brand)
+      - Tôi đang tìm [laptop](product_type)
+      - Bạn có [điện thoại](product_type) không?
+      - Tôi cần một cái [tai nghe](product_type)
+      - Hiển thị cho tôi một số [máy tính bảng](product_type)
+      - Tìm cho tôi [máy tính xách tay](product_type) giá [rẻ](budget)
+      - Cho xem các [điện thoại] (product) của [Samsung](brand)
+      - [laptop](product_type) gaming
+      - Có [máy tính bảng](product_type) nào của [Samsung](brand) không?
+
+
+
+  # - intent: ask_promotion
+  #   examples: |
+  #     - Có khuyến mãi gì không?
+  #     - Ưu đãi hiện tại là gì?
+  #     - Mã giảm giá nào đang áp dụng?
+  #     - Khuyến mãi tháng này là gì?
+  #     - Sản phẩm nào đang được giảm giá?
+  #     - [Điện thoại] (product) có khuyến mãi gì không?
+  #     - [Laptop] (product) có ưu đãi gì không?
+  #     - [Máy tính bảng] (product) có được giảm giá không?
+  #     - [Iphone 16] (product) có khuyến mãi gì không?
+  #     - [Samsung Galaxy S24] (product) có ưu đãi gì không?
+  #     - Ưu đãi [Macbook 16] (product)

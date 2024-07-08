@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "express": "^4.19.2",
+    "push-webchat": "^2.14.0",
+    "rasa-webchat": "^1.0.1"
+  }
+}
