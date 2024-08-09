@@ -8,3 +8,21 @@ models/
 venv/
 
 rasa-env/
+# Node.js dependencies
+node_modules/
+
+# JavaScript model files
+*.model.js
+
+# Rasa model files and directories
+models/
+*.tar.gz
+
+# Python virtual environments
+venv/
+rasa-env/
+
+# Rasa training data and model files
+*.tar.gz
+*.tar
+*.zip
