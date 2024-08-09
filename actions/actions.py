@@ -16,6 +16,8 @@ import requests
 import json
 from rasa_sdk.events import SlotSet
 
+API_URL ="http://localhost:8087/api"
+
 class ValidateRecommendForm(FormValidationAction):
 
     def name(self) -> Text:
@@ -122,7 +124,7 @@ class ActionHelloWorld(Action):
     
 class ActionProvideProductInfo(Action):
     def name(self) -> Text:
-        return "action_product_info"
+        return "action_provide_product_info"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
@@ -140,14 +142,12 @@ class ActionProvideProductInfo(Action):
             "sortValue": "DESC"
         }
 
-        # Thêm tham số brand nếu có giá trị
-        # if brand and brand != "tất cả":
+
         params["keyword"] = product
 
         # Xử lý tham số price nếu có giá trị
-
         params["price"] = ""  
-
+        response_text =""
         try:
             response = requests.get(api_url, params=params)
             response.raise_for_status()
@@ -155,33 +155,26 @@ class ActionProvideProductInfo(Action):
 
             if data.get("totalElements") > 0:  # Kiểm tra xem có sản phẩm hay không
                 products = data.get("content")  # Lấy danh sách sản phẩm
-                response_text = "Đây là kết quả tìm kiếm của bạn:\n"
-                formatted_response = {
-                        "payload": 'cardsCarousel',
-                        "data": []
-                    }
-        
+                
+
         # Format each product and add to the response
-                for product in products:
-                    formatted_product = {
-                        "image": product.get("mainImage", "Default image URL if none"),
-                        "title": product.get("name", "No title"),
-                        "description": product.get("price", "No ratings")
-                    }
-                    formatted_response["data"].append(formatted_product)
-                    
-            
+                product = products[0]
+                formatted_price = "{:,.0f}".format(product['price'])
+                response_text = f"Tên sản phẩm: {product['name']} \n\n" \
+                                    f"Giá: {formatted_price} VND\n\n" \
+                                    f"Giảm giá: {product.get('percent_discount', 0)} %\n\n" \
+                                    f"![Hình ảnh sản phẩm]({product['mainImage']})\n\n"
+
                 # for product in products:
                 #     response_text += f"- {product['name']} - {product['brand']} - {product['price']} USD\n"  # Tùy chỉnh hiển thị
 
             else:
-                response_text = "No products found."
+                response_text = "Không tìm thấy sản phẩm"
 
         except requests.exceptions.RequestException as e:
             response_text = "Đã có lỗi xảy ra trong quá trình tìm kiếm. Vui lòng thử lại sau."
 
         dispatcher.utter_message(text=response_text)
-        dispatcher.utter_message(json_message=formatted_response)
         return []
     
 class ActionProvideProductAvaibility(Action):
@@ -230,18 +223,37 @@ class ActionSearchProduct(Action):
             response.raise_for_status()
             data = response.json()
 
-            if data.get("totalElements") > 0:  # Kiểm tra xem có sản phẩm hay không
-                products = data.get("content")  # Lấy danh sách sản phẩm
-                response_text = "Đây là kết quả tìm kiếm của bạn:\n"
-                for product in products:
-                    response_text += f"- {product['name']} - {product['brand']} - {product['price']} USD\n"  # Tùy chỉnh hiển thị
+            if data.get("totalElements") > 0:
+                products = data.get("content")
+                
+                if len(products) == 1:
+                    product = products[0]
+                    formatted_price = "{:,.0f}".format(product['price'])
+
+                    # Kiểm tra tồn kho
+                    if product['in_stock'] > 0:
+                        availability_text = f"Còn hàng ({product['in_stock']} cái)"
+                    else:
+                        availability_text = "Hết hàng"
+
+                    markdown_text = f"Dạ, cửa hàng chúng tôi có bán **{product['name']}**.\n\n" \
+                                f"Giá: {formatted_price} VND\n\n" \
+                                f"{availability_text}\n\n" \
+                                f"![Hình ảnh sản phẩm]({product['mainImage']})\n\n"
+                else:
+                    markdown_text = "Dạ, em tìm thấy một số sản phẩm phù hợp. Anh/chị vui lòng chọn sản phẩm muốn xem chi tiết:\n\n"
+                    for p in products:
+                        formatted_price = "{:,.0f}".format(p['price'])
+                        in_stock_text = f"Còn hàng ({p['in_stock']} cái)" if p['in_stock'] > 0 else "Hết hàng"
+                        markdown_text += f"- **{p['name']}** - Giá: {formatted_price} VND - {in_stock_text}\n"
+
             else:
-                response_text = "{products}"
+                markdown_text = "Không tìm thấy sản phẩm nào."
 
         except requests.exceptions.RequestException as e:
-            response_text = "Đã có lỗi xảy ra trong quá trình tìm kiếm. Vui lòng thử lại sau."
+            markdown_text = "Đã có lỗi xảy ra trong quá trình tìm kiếm. Vui lòng thử lại sau."
 
-        dispatcher.utter_message(text=response_text)
+        dispatcher.utter_message(text=markdown_text)
         return []
     
 class ActionProvideProductPrice(Action):
@@ -256,26 +268,71 @@ class ActionProvideProductPrice(Action):
         return []
 
 class ActionCheckProductAvailability(Action):
+    
     def name(self) -> Text:
         return "action_check_product_availability"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
         product = tracker.get_slot("product")
-        dispatcher.utter_message(text=f"Sản phẩm {product} hiện tại còn hàng.")
+        brand = tracker.get_slot("brand")
+
+        # Base URL of your Spring Boot API
+        api_url = "http://localhost:8087/api/product/check-avaibility"
+
+        params = {
+            "page": 1,              # Trang đầu tiên
+            "limit": 10,            # Giới hạn số sản phẩm trên mỗi trang (tùy chỉnh)
+            "sortBy": "createdDate",   # Sắp xếp theo ngày tạo (hoặc tùy chỉnh)
+            "sortValue": "DESC"
+        }
+
+        # Thêm tham số brand nếu có giá trị
+        # if brand and brand != "tất cả":
+
+        params["keyword"] = product
+
+
+
+        try:
+            response = requests.get(api_url, params=params)
+            response.raise_for_status()
+            data = response.json()
+            
+
+            if data.get("totalElements") > 0:
+                products = data.get("content")
+
+                if len(products) == 1:
+                    product = products[0]
+                    formatted_price = "{:,.0f}".format(product['price'])
+                    
+                    # Kiểm tra tồn kho
+                    if product['in_stock'] > 0:
+                        availability_text = f"Sản phẩm {product['name']} còn {product['in_stock']} cái trong kho."
+                    else:
+                        availability_text = "Rất tiếc, sản phẩm hiện đang hết hàng."
+
+                    markdown_text = f"Dạ, cửa hàng chúng tôi có bán **{product['name']}**.\n\n" \
+                                    f"Giá: {formatted_price} VND\n\n" \
+                                    f"{availability_text}\n\n" \
+                                    f"![Hình ảnh sản phẩm]({product['mainImage']})\n\n"
+                else:
+                    markdown_text = "Dạ, em tìm thấy một số sản phẩm phù hợp. Anh/chị vui lòng chọn sản phẩm muốn xem chi tiết:\n\n"
+                    for p in products:
+                        formatted_price = "{:,.0f}".format(p['price'])
+                        in_stock_text = f"Còn hàng ({p['in_stock']} cái)" if p['in_stock'] > 0 else "Hết hàng"
+                        markdown_text += f"- **{p['name']}** - Giá: {formatted_price} VND - {in_stock_text}\n"
+            else:
+                markdown_text = "Không tìm thấy sản phẩm nào."
+
+        except requests.exceptions.RequestException as e:
+            markdown_text = "Đã có lỗi xảy ra trong quá trình tìm kiếm. Vui lòng thử lại sau."
+
+        dispatcher.utter_message(text=markdown_text)
         return []
-
-class ActionProvideDeliveryInfo(Action):
-    def name(self) -> Text:
-        return "action_provide_delivery_info"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        dispatcher.utter_message(text="Thông tin giao hàng: Đơn hàng sẽ được giao trong vòng 3-5 ngày làm việc.")
-        return []
-
 class ActionProvidePaymentMethods(Action):
     def name(self) -> Text:
         return "action_payment_methods"
@@ -329,7 +386,7 @@ class ActionProvideRecommendation(Action):
         else:
             budget = [0, 99999999]
         # Base URL of your Spring Boot API
-        api_url = "http://localhost:8087/api/product/search/v2"
+        ENDPOINT = API_URL+"/product/search"
 
         params = {
             "page": 1,              # Trang đầu tiên
@@ -343,35 +400,33 @@ class ActionProvideRecommendation(Action):
             params["brand"] = brand.lower()
         params["price"] = budget
 
-        formatted_response = {
-                        "payload": 'cardsCarousel',
-                        "data": []
-                    }
+        markdown_text = ""
         try:
-            response = requests.get(api_url, params=params)
+            response = requests.get(ENDPOINT, params=params)
             response.raise_for_status()
             data = response.json()
+            
 
             if data.get("totalElements") > 0:  # Kiểm tra xem có sản phẩm hay không
                 products = data.get("content")  # Lấy danh sách sản phẩm
                 response_text = "Đây là kết quả tìm kiếm của bạn:\n"
-                formatted_response = {
-                        "payload": 'cardsCarousel',
-                        "data": []
-                    }
-        
-        # Format each product and add to the response
-                for product in products:
-                    formatted_product = {
-                        "image": product.get("mainImage", "Default image URL if none"),
-                        "title": product.get("name", "No title"),
-                        "description": product.get("price", "No ratings")
-                    }
-                    formatted_response["data"].append(formatted_product)
-                         
-                # for product in products:
-                #     response_text += f"- {product['name']} - {product['brand']} - {product['price']} USD\n"  # Tùy chỉnh hiển thị
+                
+                if len(products) == 1:
+                    product = products[0]
+                    formatted_price: Text = "{:,.0f}".format(product['price'])
 
+                    markdown_text = f"Dạ, cửa hàng chúng tôi có bán **{product['name']}**.\n\n" \
+                                    f"Giá: {formatted_price} VND\n\n" \
+                                    f"![Hình ảnh sản phẩm]({product['mainImage']})\n\n"
+
+                else:
+                    markdown_text = "Dạ, em tìm thấy một số sản phẩm phù hợp. Anh/chị vui lòng chọn sản phẩm muốn xem chi tiết:\n\n"
+                    for p in products:
+                        formatted_price: Text = "{:,.0f}".format(p['price'])
+
+                        markdown_text += f"- **{p['name']}** - Giá: {formatted_price} VND\n"
+                    
+  
             else:
                 response_text = "No products found."
 
@@ -379,7 +434,7 @@ class ActionProvideRecommendation(Action):
             response_text = "Đã có lỗi xảy ra trong quá trình tìm kiếm. Vui lòng thử lại sau."
 
         dispatcher.utter_message(text=response_text)
-        dispatcher.utter_message(json_message=formatted_response)
+        dispatcher.utter_message(text=markdown_text)
         return []
     
 class ActionUtterGeneralPromotion(Action):

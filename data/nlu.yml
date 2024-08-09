@@ -1,7 +1,7 @@
 version: "3.1"
 
 nlu:
-  - synonym: điện thoại 
+  - synonym: điện thoại
     examples: |
       - điện thoại thông minh
       - điện thoại di động thông minh
@@ -32,7 +32,7 @@ nlu:
       - máy tính xách tay giá rẻ
       - laptop cũ
       - laptop mới
-  
+
   - synonym: tablet
     examples: |
       - máy tính bảng
@@ -47,7 +47,7 @@ nlu:
       - máy tính bảng chơi game
       - máy tính bảng vẽ
       - máy tính bảng đọc sách
-      
+
   - intent: greet
     examples: |
       - Xin chào
@@ -150,53 +150,148 @@ nlu:
       - bạn có phải người máy không?
       - tôi đang chat với ai đây?
 
+  - intent: ask_address
+    examples: |
+      - Cửa hàng ở đâu?
+      - Địa chỉ cửa hàng là gì?
+      - Cửa hàng có ở Hà Nội không?
+      - Tôi muốn biết địa chỉ cửa hàng
+
+  - intent: ask_for_opening
+    examples: |
+      - Cửa hàng mở cửa lúc mấy giờ?
+      - Mấy giờ thì đóng cửa?
+      - Cửa hàng có làm việc vào cuối tuần không?
+      - Giờ mở cửa của cửa hàng là gì?
+      - Cửa hàng mở cửa lúc nào?
+      - Khi nào cửa hàng mở cửa?
+
+  - intent: ask_shipping_methods
+    examples: |
+      - Cửa hàng có giao hàng toàn quốc không?
+      - Phí giao hàng được tính như thế nào?
+      - Thời gian giao hàng dự kiến là bao lâu?
+      - Có thể theo dõi đơn hàng được không?
+      - Giao hàng nhanh được không?
+      - Cửa hàng có những phương thức vận chuyển nào?
+      - Có cách nào để vận chuyển hàng?
+      - Tôi muốn biết các phương thức giao hàng
+
+  - intent: ask_payment_methods
+    examples: |
+      - Cửa hàng chấp nhận những hình thức thanh toán nào?
+      - Có thể thanh toán bằng thẻ tín dụng được không?
+      - Có thể trả góp không?
+      - Thanh toán khi nhận hàng được không?
+      - Cửa hàng có những phương thức thanh toán nào?
+      - Tôi có thể thanh toán bằng những cách nào?
+      - Những cách thanh toán tại cửa hàng là gì?
+
   - intent: ask_product_info
     examples: |
-      - Cho tôi xin thông tin về sản phẩm [iPhone 13](keywords)
-      - Xin thông tin về sản phẩm [Iphone 14](product)
-      - Bạn có bán [tivi](product) không?
-      - Cho tôi biết về [Laptop Acer](product)
-      - Tôi muốn biết về [iPhone 12](product)
-      - Hiển thị thông tin chi tiết của [iPad Pro](product)
-      - Bạn có thể cung cấp thông tin về [Samsung Galaxy S21](product) không?
+      - Cho tôi xin thông tin về sản phẩm [iPhone 13](product_name)
+      - Xin thông tin về sản phẩm [Iphone 14](product_name)
+      - Bạn có bán [tivi](product_name) không?
+      - Cho tôi biết về [Laptop Acer](product_name)
+      - Tôi muốn biết về [iPhone 12](product_name)
+      - Hiển thị thông tin chi tiết của [iPad Pro](product_name)
+      - Bạn có thể cung cấp thông tin về [Samsung Galaxy S21](product_name) không?
       - Các thông số kỹ thuật của [Laptop HP Pavilion 15] là gì?
-      - Chi tiết về [MacBook Air](product)
+      - Chi tiết về [MacBook Air](product_name)
       - Cung cấp thông tin về [Sony WH-1000XM4]
       - Tôi cần thông tin chi tiết về [Dell XPS 13]
-      - Xem thông tin [Samsung Galaxy S20](product)
-      - Cho tôi biết chi tiết về [điện thoại iPhone 15](product)
-      - [iPad Pro M2](product) có những tính năng gì?
-      - Tôi quan tâm đến điện thoại [Samsung Galaxy S23 Ultra](product)
+      - Xem thông tin [Samsung Galaxy S20](product_name)
+      - Cho tôi biết chi tiết về [điện thoại iPhone 15](product_name)
+      - [iPad Pro M2](product_name) có những tính năng gì?
+      - Tôi quan tâm đến điện thoại [Samsung Galaxy S23 Ultra](product_name)
+      - Xem chi tiết sản phẩm [iPhone 13 Pro Max](product_name)
+      - Tôi muốn biết thêm về [MacBook Air M2](product_name)
+      - Thông tin của [iPad Pro 11 inch](product_name) như thế nào?
+      - Cho tôi xem thông tin của [Samsung Galaxy S23 Ultra](product_name)
+      - [Xiaomi 13 Pro](product_name) có gì đặc biệt?
+      - Cho mình xem cấu hình của [Google Pixel 7 Pro](product_name)
+      - Thông số kỹ thuật của [iPhone 13 Pro Max](product_name) là gì?
+      - Mô tả sản phẩm [MacBook Air M2](product_name).
+      - Tính năng của [iPad Pro 11 inch](product_name).
+      - [Samsung Galaxy S23 Ultra](product_name) có những ưu điểm gì?
+      - [Xiaomi 13 Pro](product_name) có những phiên bản nào?
+      - [Google Pixel 7 Pro](product_name) có mấy màu?
+      - Bạn có thể cho tôi biết thêm về [iPhone 13 Pro Max](product_name) không?
+      - Tôi đang tìm hiểu về [MacBook Air M2](product_name), bạn có thể giúp tôi không?
+      - Bạn có thông tin gì về [iPad Pro 11 inch](product_name) không?
+      - Tôi muốn biết [Samsung Galaxy S23 Ultra](product_name) có gì mới.
+      - [Xiaomi 13 Pro](product_name) có tốt không?
+      - [Google Pixel 7 Pro](product_name) có đáng mua không?
+      - [iPhone 13 Pro Max](product_name)?
+      - [MacBook Air M2](product_name)?
+      - [iPad Pro 11 inch](product_name)?
+      - [Samsung Galaxy S23 Ultra](product_name)?
+      - [Xiaomi 13 Pro](product_name)?
+      - [Google Pixel 7 Pro](product_name)?
 
+  - intent: ask_product_availability
+    examples: |
+      - Sản phẩm [iPhone 13](product_name) còn hàng không?
+      - [Laptop Asus ROG Strix G15](product_name) còn không?
+      - Tôi muốn biết [máy lọc không khí Xiaomi Mi Air Purifier 4 Lite](product_name) còn hàng không?
+      - [Tai nghe không dây Sony WH-CH710N](product_name) có sẵn không?
+      - Còn [MacBook Pro 14 inch](product_name) không?
+      - [Samsung Galaxy Tab S8 Ultra](product_name) còn hàng không shop?
+      - Shop còn [loa Bluetooth JBL Flip 5](product_name) không?
+      - Kiểm tra xem còn [Apple Watch Series 8](product_name) không?
+      - [Điện thoại Samsung Galaxy Z Fold4](product_name) còn không?
+      - [Máy tính bảng iPad Air (2022)](product_name) còn hàng không?
+      - [iPhone 13 Pro Max 128GB](product_name)
+      - [Laptop Asus TUF Gaming F15](product_name)
+      - [Máy hút bụi không dây Dyson V15 Detect](product_name)
+      - [Loa Bluetooth Sony SRS-XB13](product_name)
+      - [Smart TV Samsung 4K 55 inch](product_name)
+      - [Tủ lạnh Samsung Inverter 319 lít](product_name)
+      - [Máy giặt LG Inverter 9 kg](product_name)
+      - [Điều hòa Daikin Inverter 1 HP](product_name)
+      - [Máy ảnh Sony Alpha a7 III](product_name)
+      - [Ống kính Canon EF 50mm f/1.8 STM](product_name)
+
+  - intent: out_of_scope
+    examples: |
+      - Không liên quan
+      - Không liên quan
+      - Không liên quan
+      - Bạn có biết nấu ăn không?
+      - Hôm nay thời tiết thế nào?
+      - Kể cho tôi nghe một câu chuyện cười đi.
+      - Bạn thích màu gì?
+      - Bài hát yêu thích của bạn là gì?
+      - Bạn có thể giúp tôi đặt vé máy bay được không?
+      - Tôi muốn tìm một khách sạn gần đây
   # - intent: search_product
   #   examples: |
-  #     - Tôi muốn tìm sản phẩm [điện thoại Samsung Galaxy S21] ((product)
+  #     - Tôi muốn tìm sản phẩm [điện thoại Samsung Galaxy S21] ((product_name)
   #     - Tôi cần tìm sản phẩm [Apple](brand)
   #     - Tôi muốn tìm sản phẩm [Xiaomi](brand)
   #     - Tôi cần tìm sản phẩm [iphone](brand)
-  #     - Tôi đang tìm [laptop](product)
-  #     - Bạn có [điện thoại](product) không?
-  #     - Tôi cần một cái [tai nghe](product)
-  #     - Hiển thị cho tôi một số [máy tính bảng](product)
-  #     - Tìm cho tôi [máy tính xách tay](product) giá rẻ
-  #     - Cho xem các [điện thoại] (product) của [Samsung](brand)
-  #     - [Laptop gaming](product)
-  #     - Có [máy tính bảng](product) nào của [Samsung](brand) không?
-
+  #     - Tôi đang tìm [laptop](product_name)
+  #     - Bạn có [điện thoại](product_name) không?
+  #     - Tôi cần một cái [tai nghe](product_name)
+  #     - Hiển thị cho tôi một số [máy tính bảng](product_name)
+  #     - Tìm cho tôi [máy tính xách tay](product_name) giá rẻ
+  #     - Cho xem các [điện thoại] (product_name) của [Samsung](brand)
+  #     - [Laptop gaming](product_name)
+  #     - Có [máy tính bảng](product_name) nào của [Samsung](brand) không?
 
   # - intent: ask_product_price
   #   examples: |
-  #     - Giá của [điện thoại Samsung Galaxy S21](product) là bao nhiêu?
-  #     - Tôi muốn biết giá của [đồng hồ Casio](product)
-  #     - Xin giá của [túi xách Louis Vuitton](product)
-  #     - Cho biết giá của [quần jean Levi's](product)
+  #     - Giá của [điện thoại Samsung Galaxy S21](product_name) là bao nhiêu?
+  #     - Tôi muốn biết giá của [đồng hồ Casio](product_name)
+  #     - Xin giá của [túi xách Louis Vuitton](product_name)
+  #     - Cho biết giá của [quần jean Levi's](product_name)
 
   # - intent: ask_product_availability
   #   examples: |
-  #     - Sản phẩm [laptop Dell XPS 15](product) còn bạn
-  #     - [Tai nghe Bluetooth Sony](product) còn không
-  #     - Tôi muốn biết được [máy lọc không khí Xiaomi](product) còn tồn
-  #     - Có còn không [balo The North Face](product) không
+  #     - Sản phẩm [laptop Dell XPS 15](product_name) còn bạn
+  #     - [Tai nghe Bluetooth Sony](product_name) còn không
+  #     - Tôi muốn biết được [máy lọc không khí Xiaomi](product_name) còn tồn
+  #     - Có còn không [balo The North Face](product_name) không
 
   # - intent: ask_delivery_info
   #   examples: |
@@ -270,12 +365,28 @@ nlu:
       - Bạn có [điện thoại](product_type) không?
       - Tôi cần một cái [tai nghe](product_type)
       - Hiển thị cho tôi một số [máy tính bảng](product_type)
-      - Tìm cho tôi [máy tính xách tay](product_type) giá [rẻ](budget)
-      - Cho xem các [điện thoại] (product) của [Samsung](brand)
+      - Tìm cho tôi [máy tính xách tay](product_type) giá [rẻ](budget:low)
+      - Tôi muốn mua sản phẩm giá [thấp](budget:low)
+      - Tìm cho tôi sản phẩm giá [thấp](budget:low)
+      - Tôi cần sản phẩm giá [thấp](budget:low)
+      - Tôi muốn mua sản phẩm giá [trung](budget:medium)
+      - Tìm cho tôi sản phẩm giá [trung](budget:medium)
+      - Tôi cần sản phẩm giá [trung](budget:medium)
+      - Tôi muốn mua sản phẩm giá [cao](budget:high)
+      - Tìm cho tôi sản phẩm giá [cao](budget:high)
+      - Tôi cần sản phẩm giá [cao](budget:high)
+      - Tôi muốn mua sản phẩm giá dưới [5 triệu](budget:low)
+      - Tìm cho tôi sản phẩm giá dưới [5 triệu](budget:low)
+      - Tôi cần sản phẩm giá dưới [5 triệu](budget:low)
+      - Tôi muốn mua sản phẩm giá từ [5-10 triệu](budget:medium)
+      - Tìm cho tôi sản phẩm giá từ [5-10 triệu](budget:medium)
+      - Tôi cần sản phẩm giá từ [5-10 triệu](budget:medium)
+      - Tôi muốn mua sản phẩm giá trên [10 triệu](budget:high)
+      - Tìm cho tôi sản phẩm giá trên [10 triệu](budget:high)
+      - Tôi cần sản phẩm giá trên [10 triệu](budget:high)
+      - Cho xem các [điện thoại] (product_name) của [Samsung](brand)
       - [laptop](product_type) gaming
       - Có [máy tính bảng](product_type) nào của [Samsung](brand) không?
-
-
 
   # - intent: ask_promotion
   #   examples: |
@@ -284,9 +395,9 @@ nlu:
   #     - Mã giảm giá nào đang áp dụng?
   #     - Khuyến mãi tháng này là gì?
   #     - Sản phẩm nào đang được giảm giá?
-  #     - [Điện thoại] (product) có khuyến mãi gì không?
-  #     - [Laptop] (product) có ưu đãi gì không?
-  #     - [Máy tính bảng] (product) có được giảm giá không?
-  #     - [Iphone 16] (product) có khuyến mãi gì không?
-  #     - [Samsung Galaxy S24] (product) có ưu đãi gì không?
-  #     - Ưu đãi [Macbook 16] (product)
+  #     - [Điện thoại] (product_name) có khuyến mãi gì không?
+  #     - [Laptop] (product_name) có ưu đãi gì không?
+  #     - [Máy tính bảng] (product_name) có được giảm giá không?
+  #     - [Iphone 16] (product_name) có khuyến mãi gì không?
+  #     - [Samsung Galaxy S24] (product_name) có ưu đãi gì không?
+  #     - Ưu đãi [Macbook 16] (product_name)

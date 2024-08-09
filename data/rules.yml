@@ -43,7 +43,37 @@ rules:
           - requested_slot: null
       - action: action_provide_recommendation
       - action: action_clear_all_slots
-      - action: utter_iamabot
+
+  - rule: address inquiry
+    steps:
+      - intent: ask_address
+      - action: utter_ask_address
+
+  - rule: opening hours inquiry
+    steps:
+      - intent: ask_for_opening
+      - action: utter_ask_for_opening
+
+  - rule: shipping methods inquiry
+    steps:
+      - intent: ask_shipping_methods
+      - action: utter_ask_shipping_methods
+
+  - rule: action_check_product_availability
+    steps:
+      - intent: ask_product_availability
+      - action: action_check_product_availability
+      - action: action_clear_all_slots
+
+  - rule: payment methods inquiry
+    steps:
+      - intent: ask_payment_methods
+      - action: utter_ask_payment_methods
+
+  - rule: Xử lý ngoài phạm vi
+    steps:
+      - intent: out_of_scope
+      - action: utter_out_of_scope
 
   # - rule: Answer when the user asks for the general promotion
   #   steps:

@@ -9,7 +9,14 @@ intents:
   - mood_great
   - mood_unhappy
   - bot_challenge
+  - ask_address
+  - ask_for_opening
+  - ask_shipping_methods
+  - ask_payment_methods
   - ask_product_info
+  - out_of_scope
+  - ask_product_availability
+
   # # - search_product
   # - ask_product_price
   # - ask_product_availability
@@ -21,12 +28,20 @@ intents:
   # - ask_promotion
 
 entities:
+  - product_name
   - product_type
   - keyword_search
   - brand
   - budget
 
 slots:
+  product_name:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: product_name
+
   product_type:
     type: text
     influence_conversation: false
@@ -34,7 +49,7 @@ slots:
       - type: from_entity
         entity: product_type
         condition:
-        - active_loop: recommend_form
+          - active_loop: recommend_form
 
   brand:
     type: text
@@ -43,8 +58,8 @@ slots:
       - type: from_entity
         entity: brand
         condition:
-        - active_loop: recommend_form
-        
+          - active_loop: recommend_form
+
   budget:
     type: text
     influence_conversation: false
@@ -52,17 +67,35 @@ slots:
       - type: from_entity
         entity: budget
         condition:
-        - active_loop: recommend_form
+          - active_loop: recommend_form
 
 responses:
+  utter_ask_address:
+    - text: "Chúng tôi hiện chỉ có 1 chi nhánh duy nhất tại Số 1 Võ Văn Ngân, phường Linh Trung, quận Thủ Đức, Thành phố Hồ Chí Minh."
+
+  utter_ask_for_opening:
+    - text: "Giờ mở cửa của chúng tôi là từ 9h sáng đến 9h tối tất cả các ngày trong tuần (kể cả ngày lễ)."
+    - text: "Hiện tại, tất cả các chi nhánh của chúng tôi đều mở cửa từ 9h sáng đến 9h tối."
+    - text: "Giờ mở cửa là 9h sáng và đóng cửa vào lúc 9h tối tất cả các ngày trong tuần."
+
+  utter_ask_shipping_methods:
+    - text: "Chúng tôi hiện có hình thức vận chuyển do Giao hàng nhanh và Giao hàng tiết kiệm."
+    - text: "Phí giao hàng sẽ được tính dựa trên khoảng cách và hình thức giao hàng bạn chọn."
+    - text: "Chúng tôi có hình thức giao hàng tận nơi. Ngoài ra, bạn cũng có thể lựa chọn nhận hàng tại cửa hàng của chúng tôi."
+
+  utter_ask_payment_methods:
+    - text: "Chúng tôi chấp nhận thanh toán bằng các hình thức sau: \n- Tiền mặt tại cửa hàng\n- Tiền mặt khi nhận hàng (COD)\n\n- Ví điện tử Zalopay \n"
+
   utter_greet:
-    - text: "Hey! How are you?"
     - text: "Chào bạn, có điều gì tôi có thể giúp bạn hôm nay?"
     - text: "Xin chào, chào mừng bạn đến với cửa hàng của chúng tôi!"
     - text: "Hi, bạn cần sự trợ giúp gì từ chúng tôi?"
     - text: "Xin chào, hãy nói cho tôi biết bạn đang tìm kiếm sản phẩm gì."
     - text: "Chào bạn, tôi rất vui được gặp bạn tại đây!"
-
+  utter_out_of_scope:
+    - text: "Xin lỗi, tôi chưa được học để trả lời câu hỏi đó. Bạn có thể hỏi tôi về các sản phẩm điện tử hoặc tình trạng còn hàng không?"
+    - text: "Tôi e là tôi không thể giúp bạn với vấn đề này"
+    - text: "Rất tiếc, tôi không có đủ thông tin để trả lời câu hỏi của bạn. Tôi có thể giúp gì khác cho bạn không?"
   utter_cheer_up:
     - text: "Here is something to cheer you up:"
       image: "https://i.imgur.com/nGF1K8f.jpg"
@@ -90,8 +123,8 @@ responses:
   utter_thanks:
     - text: "Cảm ơn bạn đã liên hệ! Rất vui được hỗ trợ bạn."
 
-  utter_search_results:
-    - text: "Dưới đây là kết quả tìm kiếm sản phẩm của bạn:"
+  # utter_search_results:
+  #   - text: "Dưới đây là kết quả tìm kiếm sản phẩm của bạn:"
 
   utter_product_info:
     - text: "Thông tin chi tiết về sản phẩm bạn quan tâm:"
@@ -100,20 +133,20 @@ responses:
     - text: "Sản phẩm hiện đang còn hàng."
     - text: "Rất tiếc, sản phẩm hiện đã hết hàng."
 
-  utter_delivery_info:
-    - text: "Thông tin giao hàng của bạn như sau:"
+  # utter_delivery_info:
+  #   - text: "Thông tin giao hàng của bạn như sau:"
 
-  utter_payment_methods:
-    - text: "Chúng tôi hỗ trợ các phương thức thanh toán sau:"
+  # utter_payment_methods:
+  #   - text: "Chúng tôi hỗ trợ các phương thức thanh toán sau:"
 
-  utter_order_status:
-    - text: "Trạng thái đơn hàng của bạn là:"
+  # utter_order_status:
+  #   - text: "Trạng thái đơn hàng của bạn là:"
 
-  utter_time_delivery:
-    - text: "Thời gian giao hàng dự kiến là:"
+  # utter_time_delivery:
+  #   - text: "Thời gian giao hàng dự kiến là:"
 
-  utter_recommendation:
-    - text: "Dựa trên sở thích của bạn, tôi gợi ý bạn những sản phẩm sau:"
+  # utter_recommendation:
+  #   - text: "Dựa trên sở thích của bạn, tôi gợi ý bạn những sản phẩm sau:"
 
   # recommendation form required slots
   utter_ask_product_type:
@@ -133,20 +166,21 @@ responses:
 actions:
   - action_provide_product_info
   - action_search_product
-  - action_provide_product_price
   - action_check_product_availability
-  - action_delivery_info
-  - action_payment_methods
-  - action_check_order_status
-  - action_provide_delivery_time
+
+  # - action_provide_product_price
+  # - action_delivery_info
+  # - action_payment_methods
+  # - action_check_order_status
+  # - action_provide_delivery_time
   - action_provide_recommendation
   - action_clear_all_slots
   - validate_recommend_form
 
 forms:
   recommend_form:
-    ignored_intents: 
-    - chitchat
+    ignored_intents:
+      - chitchat
     required_slots:
       - product_type
       - brand
